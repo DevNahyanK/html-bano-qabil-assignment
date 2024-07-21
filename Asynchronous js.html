@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <style>
+        img {
+            display: block;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 40px;
+            margin-inline-end: 40px;
+            unicode-bidi: isolate;
+            column-gap: 373px;
+            row-gap: 698px;
+        };
+        
+    </style> -->
+</head>
+<body>
+    <div id="main">
+    <h1>Asynchronous JavaScript</h1>
+    <figure>
+       <img src="https://images.unsplash.com/photo-1591267990532-e5bdb1b0ceb8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXN5bmMlMjAlMkYlMjBhd2FpdHxlbnwwfHwwfHx8MA%3D%3D" width="600" height="380" alt="Error Loading Image">
+        <figcaption>An image showcasing an Asynchronous JS code snippet</figcaption>
+    </figure>
+    <br>
+    <p>After following this tutorial, you will be familiar with Asynchronous Javascript.</p>
+    <p>But before we dive into that, we need to make sure you understand what Synchronous code is and how it works.</p>
+    <hr>
+    <div id="content">
+        <div id="topics">
+    <h1>What is Synchronous Code?</h1>
+    <p>When we write a program in JavaScript, it executes line by line. When a line is completely executed, then and then only does the code move forward to execute the next line.</p>
+    <p>Let's look at an example of this:</p>
+    
+    <pre>
+        <code>
+                        let greet_one = "Hello"
+                        let greet_two = "World!!!"
+                        console.log(greet_one)
+                        for(let i=0;i<1000000000;i++){
+                        }
+                        console.log(greet_two); 
+                    </code>
+    </pre>
+    <div>
+        <p>Now if you run the above example on your machine you will notice that greet_one logs first. Then the program waits for a couple of seconds and then logs greet_two. This is because the code executes line by line. This is called synchronous code.</p>
+    </div>
+    <div>
+        <p>This creates lot of problems. For example, if a certain piece of code takes 10 seconds to execute, the code after it won't be able to execute until it's finished, causing delays.</p>
+    </div>
+    <hr>
+    <div id="topics">
+    <h1>What is Asynchronous Code?</h1>
+    <div>
+        <p>With asynchronous code, multiple tasks can execute at the same time while tasks in the background finish. This is what we call non-blocking code. The execution of other code won't stop while an asynchronous task finishes its work.</p>
+    </div>
+    <div>
+        <p>
+        Let's see an example of asynchronous code:
+        </p>
+</div>
+<pre> <code>
+                        let greet_one = "Hello"
+                        let greet_two = "World!!!"
+                        console.log(greet_one)
+                        setTimeout(function(){
+                            console.log("Asynchronous");
+                        }, 10000)
+                        console.log(greet_two);
+      </code>
+</pre>
+<div><p>
+    In the above example, if you run the code on your machine you will see greet_one and greet_two logged even there is code in between those 2 logs.
+</p></div>
+<div><p>
+    Now, setTimeout is asynchronous so it runs in background, allowing code after it to execute while it runs. After 10 seconds, Asynchronous will print because we set a time of 10 seconds in setTimeout to execute it after 10 seconds.
+</p></div>
+<div><p>
+    In this tutorial, we will study asynchronous JavaScript in detail so you can learn how to write your own asynchronous code. I just wanted to give you a taste of async JavaScript using in-built functions to whet your appetite.
+</p></div>
+<hr>
+    </div>
+    <div id="topics">
+<h1>How Callbacks Work in JavaScript</h1>
+<div><p>
+    "A callback function is a function passed into another function as an argument, which is then invoked inside the outer function to complete some kind of routine or action." (MDN)
+</p></div>
+<div><p>
+    Let's look at a code example to see why using callbacks instead would be helpful:
+</p></div>
+<pre>
+    <code>
+                        function compute(action, x, y){
+                            if(action === "add"){
+                                return x+y
+                            }else if(action === "divide"){
+                                return x/y
+                            }
+                        } 
+             
+                        console.log(compute("add",10,5))   
+                        console.log(compute("divide",10,5)) 
+    </code>
+</pre>
+<div><p>
+    In the above example, we have two operations. But what if we want to add more operations? Then the number of if/else statements would increase. This code would be lengthy, so we use callbacks instead:
+</p></div>
+<pre>
+    <code>
+                        function add(x,y){
+                            return x+y
+                        }
+        
+                        function divide(x,y){
+                            return x/y
+                        }
+                  
+                       function compute(callBack, x, y){
+                            return callBack(x,y)
+                        }
+        
+                        console.log(compute(add, 10, 5))    // 2
+                        console.log(compute(divide, 10, 5))
+    </code>
+</pre>
+<div><p>
+    Now when we call compute with three arguments, one of them is an operation. When we enter in the compute function, the function returns a function with a given action name. It, in response, calls that function and returns the result.
+</p></div>
+    </div>
+<hr>
+<div id="topics">
+<h1>How Promises Work in JavaScript</h1>
+
+    <p>A promise is placeholder for the future result of an asynchronous operation. In simple words, we can say it is a container for a future value.
+    <br>
+    When using promises, we don't need to relay on callbacks which helps us avoid callback hell.
+    <br>
+    Before showing you how promises work through code, I'll explain promises using the analogy of a lottery ticket.
+    <br>    
+    Promises are like lottery ticket. When we buy a lottery ticket, it says we will get money if our outcome is right. This is like a promise. The lottery draw happens asynchronously, and if the numbers match, we receive the money which was promised.
+    </p>
+    <p>Now let's look at a code example:</p>
+    <pre>
+        <code>
+                         const request = fetch('https://course-api.com/react-store-products')
+                         console.log(request);
+        </code>
+    </pre>
+    <p>The above code is using fetch for a request from an API. It returns a promise which will get a response from the server.</p>
+    <img src="https://project-1-eight-rho.vercel.app/images/1212.png" width="500" height="250" alt="Error Loading Image">
+    <p>This is how a promise looks. It has a particular promise state and result. When a promise is created it runs asynchronously. When the given task is completed, then we say the promise is settled. After the promise is settled, we can have either a fulfilled or rejected promise state based on the outcome of the promise. We can handle these different states in different ways in our code.</p>
+    
+    <h1>How to Consume Promises</h1>
+     <p>We can consume a promise using the then() method on the promise. Producing code is code that can take some time to complete. Consuming code is code that must wait for the result.
+        <br>
+        So if we consume a promise, this means that when we make a request, we wait for the result. Then after result arrives, we perform some operation on those results.
+        <br>
+        Let's continue using the above example to understand how we can consume a promise.</p>
+        
+        <pre>
+            <code>
+                          const request = fetch('https://course-api.com/react-store-products').then((response) =>{
+                              console.log(response);
+                              return response.json()
+                          }).then((data) =>{
+                              console.log(data);
+                          })
+            </code>
+        </pre>
+        <p>
+            We make a request to the country API. Then, after the fetch request, we use the then() method to consume the promise. After that, we return a bunch of information like header, status, and so on (you can see it in the below output image).
+            <br>
+            So we specifically need data which we need to convert to JSON which returns a promise. The data which is returned when we make a API request gets returned in the form of a promise.
+            <br>
+            To handle that promise, we again use the then() method to log data from the response. Using multiple then() methods on a single request is called chaining promises.
+        </p>
+        <img src="https://project-1-eight-rho.vercel.app/images/121212.png"  width="900"  alt="Error Loading Image"> 
+        <hr>
+         </div>
+        </div>
+    </div>
+    <br>
+</body>
+</html>
+     
